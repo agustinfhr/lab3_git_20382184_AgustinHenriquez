@@ -7,12 +7,14 @@ public class Usuario {
     private final String contrasenia;
     private final int id;
     private ArrayList<Publicacion> publicaciones;
+    private ArrayList<String> seguidores;
 
-    public Usuario(String nombre, String contrasenia, int id, ArrayList<Publicacion> publicaciones) {
+    public Usuario(String nombre, String contrasenia, int id, ArrayList<Publicacion> publicaciones, ArrayList<String> seguidores) {
         this.nombre = nombre;
         this.contrasenia = contrasenia;
         this.id = id;
         this.publicaciones = publicaciones;
+        this.seguidores = seguidores;
     }
 
     public String getNombre() {
@@ -31,13 +33,16 @@ public class Usuario {
         return this.publicaciones;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setPublicaciones(ArrayList<Publicacion> publicaciones) {
         this.publicaciones = publicaciones;
     }
 
+    public ArrayList<String> getSeguidores() {
+        return this.seguidores;
+    }
+
+    public void setSeguidores(ArrayList<String> seguidores) {
+        this.seguidores = seguidores;
+    }
 
 }

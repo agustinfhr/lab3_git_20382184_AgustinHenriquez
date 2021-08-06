@@ -2,6 +2,7 @@
 
 package SocialNetwork;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Socialnetwork {
@@ -41,4 +42,20 @@ public class Socialnetwork {
     }
 
 
+
+
+
+    public static Socialnetwork sn1() {
+        ArrayList<Usuario> listaUsuarios = new ArrayList();
+        ArrayList<Publicacion> listaPublicaciones = new ArrayList();
+        ArrayList<Reaccion> listaReacciones = new ArrayList();
+        ArrayList<Usuario> usuarioActivo = new ArrayList();
+        Usuario user1 = new Usuario("Pablo", "4321", 1, (ArrayList)null, (ArrayList)null);
+        Usuario user2 = new Usuario("Tefy", "5287", 2, (ArrayList)null, (ArrayList)null);
+        Usuario user3 = new Usuario("Rodrigo", "9999", 3, (ArrayList)null, (ArrayList)null);
+        Usuario user4 = new Usuario("Agus", "1234", 4, (ArrayList)null, (ArrayList)null);
+        Usuario user5 = new Usuario("Gaspi", "1313", 5, (ArrayList)null, (ArrayList)null);
+        Publicacion post1 = new Publicacion(1, (ArrayList)null, )
+
+    }
 }

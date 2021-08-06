@@ -1,2 +1,10 @@
 SocialNetwork/Main.java
  SocialNetwork.Main
+SocialNetwork/Usuario.java
+ SocialNetwork.Usuario
+SocialNetwork/Socialnetwork.java
+ SocialNetwork.Socialnetwork
+SocialNetwork/Reaccion.java
+ SocialNetwork.Reaccion
+SocialNetwork/Publicacion.java
+ SocialNetwork.Publicacion

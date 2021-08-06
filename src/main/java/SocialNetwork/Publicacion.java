@@ -4,19 +4,20 @@ import java.util.ArrayList;
 
 public class Publicacion {
     private final int id;
-    private final String contenido;
+    private ArrayList<Reaccion> reacciones;
     private final String tipoPublicacion;
+    private final String contenido;
     private final String fecha;
     private final String autor;
-    private ArrayList<Reaccion> reacciones;
 
-    public Publicacion(int id, String contenido, String tipoPublicacion, String fecha, String autor, ArrayList<Reaccion> reacciones){
+
+    public Publicacion(int id, ArrayList<Reaccion> reacciones, String tipoPublicacion, String contenido, String fecha, String autor){
         this.id = id;
-        this.contenido = contenido;
+        this.reacciones = reacciones;
         this.tipoPublicacion = tipoPublicacion;
+        this.contenido = contenido;
         this.fecha = fecha;
         this.autor = autor;
-        this.reacciones = reacciones;
     }
 
     public int getId() {
@@ -31,18 +32,14 @@ public class Publicacion {
         this.reacciones = reacciones;
     }
 
-    public String getAutor() {
-        return this.autor;
-    }
-
     public String getTipoPublicacion() {
         return this.tipoPublicacion;
     }
 
-    public void setTipoPublicacion() {
-        return this.tipoPublicacion;
+    public String getAutor() {
+        return this.autor;
     }
 
-    public
+
 
 }
