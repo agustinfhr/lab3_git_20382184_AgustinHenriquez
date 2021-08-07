@@ -9,9 +9,47 @@ public class Main {
     public Main() {
     }
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
         Socialnetwork sn = Socialnetwork.sn1();
-        menu(sn);
-    }
+        boolean salir = false;
+
+        while(!salir) {
+            System.out.println(" ### BIENVENIDO A JAVAGRAM ### ");
+            System.out.println(" Escoja una opcion: ");
+            System.out.println(" 1. Iniciar Sesion");
+            System.out.println(" 2. Registrarse ");
+            System.out.println(" 3. Salir del programa \n");
+            System.out.println("\n Ingrese su opcion: \n");
+
+            try {
+                int opcion = scan.nextInt();
+                switch(opcion) {
+                    case 1:
+                        System.out.println("\n\n Ha elegido la opcion Iniciar sesion ");
+                        Usuario usuario = new Usuario(" ", " ", 0, (ArrayList)null, (ArrayList)null, null);
+                        usuario.login(sn);
+                        menu(sn);
+                        break;
+                    case 2:
+                        System.out.println("\n\n Ha elegido la opcion REGISTRARSE ");
+                        sn.register(sn);
+                        System.out.println("\n\n Inicie Sesion para confirmar el Registro ");
+                        break;
+                    case 3:
+                        System.out.println(" Ha salido del Programa ");
+                        salir = true;
+                        break;
+                    default:
+                        System.out.println("\n\n  Ingrese un numero entre 1 y 3 ");
+                    }
+                } catch (InputMismatchException var6) {
+                    System.out.println("\n\n Debe ingresar un numero ");
+                    scan.next();
+                }
+            }
+
+        }
+
 
     public static void menu(Socialnetwork sn) {
         Scanner scan = new Scanner(System.in);

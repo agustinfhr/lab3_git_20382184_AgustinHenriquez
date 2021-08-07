@@ -1,6 +1,8 @@
 package SocialNetwork;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Iterator;
 
 public class Usuario {
     private final String nombre;
@@ -53,6 +55,57 @@ public class Usuario {
 
     public void setSeguidores(String[] seguidores) {
         this.seguidores = seguidores;
+    }
+
+    public String toString() {
+        return "\t{ Nombre : '" + this.nombre + "' , Contrasenia : '" + this.contrasenia + "' , Id : " + this.id + " } \n";
+    }
+
+    public void login(Socialnetwork sn) {
+        Scanner input1 = new Scanner(System.in);
+        Scanner input2 = new Scanner(System.in);
+        ArrayList<Usuario> listaUsuarios = sn.getUsuarios();
+        ArrayList<Usuario> listaUsuarioActivo = sn.getUsuarioActivo();
+        boolean logear = false;
+
+        while(true) {
+            while (!logear) {
+                System.out.println("\n\n Si desea salir del programa, ingrese salir");
+                System.out.println(" Ingrese nombre de Usuario : \n");
+                String username = input1.next();
+                if (username.equals("salir")) {
+                    System.exit(0);
+                }
+
+                System.out.println("\n Ingrese Contrasenia: \n");
+                String password = input2.next();
+
+                for (int i = 0; i < listaUsuarios.size(); ++i) {
+                    String Username = ((Usuario) listaUsuarios.get(i)).getNombre();
+                    String Password = ((Usuario) listaUsuarios.get(i)).getContrasenia();
+                    if (username.equals(Username)) {
+                        if (password.equals(Password)) {
+                            System.out.println("\n\n Ha iniciado Sesion ");
+                            listaUsuarioActivo.add((Usuario) listaUsuarios.get(i));
+                            listaUsuarios.remove(i);
+                            System.out.println(sn.toString());
+                            logear = true;
+                        }
+
+                        break;
+                    }
+                }
+            }
+            return;
+        }
+
+    }
+
+    public void logout(Socialnetwork sn) {
+        ArrayList<Usuario> usuarioActivo = sn.getUsuarioActivo();
+        ArrayList<Usuario> listaUsuarios = sn.getUsuarios();
+        listaUsuarios.add((Usuario)usuarioActivo.get(0));
+        usuarioActivo.remove(0);
     }
 
 }
