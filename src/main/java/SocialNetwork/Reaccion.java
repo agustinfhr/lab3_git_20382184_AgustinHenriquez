@@ -23,5 +23,8 @@ public class Reaccion {
         return this.autor;
     }
 
-    public
+    public String getTipoReaccion() {
+        return this.tipoReaccion;
+    }
+
 }
