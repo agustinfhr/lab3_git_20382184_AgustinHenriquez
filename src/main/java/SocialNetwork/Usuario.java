@@ -1,5 +1,7 @@
 package SocialNetwork;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Iterator;
@@ -107,5 +109,14 @@ public class Usuario {
         listaUsuarios.add((Usuario)usuarioActivo.get(0));
         usuarioActivo.remove(0);
     }
+
+    public void post(Socialnetwork sn) {
+        LocalDate today = LocalDate.now();
+        String fecha = today.format(DateTimeFormatter.ofPattern("dd/MMM/yy"));
+
+
+    }
+
+
 
 }

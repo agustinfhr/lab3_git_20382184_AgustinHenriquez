@@ -87,6 +87,7 @@ public class Main {
                         break;
                     case 5:
                         System.out.println("\n\n Ha elegido la opcion Cerrar sesion \n\n");
+                        usuarioActivo.logout(sn);
                         salir = true;
                         break;
                     case 6:
