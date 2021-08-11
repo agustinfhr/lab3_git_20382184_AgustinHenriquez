@@ -40,6 +40,10 @@ public class Publicacion {
         return this.autor;
     }
 
+    public String toString() {
+        return "\t id: " + id + "  contenido: " + contenido + "\n";
+    }
+
 
 
 }

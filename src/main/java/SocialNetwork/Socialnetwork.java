@@ -38,7 +38,7 @@ public class Socialnetwork {
     }
 
     public String toString() {
-        return "\n\n Ususario registrados \n\n" + this.usuarios + "\n\n Publicaciones \n\n" + this.publicaciones;
+        return "\n\n---- Ususario registrados ----\n\n" + usuarios + "\n\n---- Publicaciones ----\n\n" + publicaciones;
     }
 
     public void register(Socialnetwork sn) {
@@ -53,12 +53,11 @@ public class Socialnetwork {
             System.out.println("\n Ingrese contrasenia a registrar: ");
             String password = input2.next();
             int id = getUsuarios().size() + 1;
-            Usuario usuarioNuevo = new Usuario(username, password, id, (ArrayList)null, (ArrayList)null,null);
+            Usuario usuarioNuevo = new Usuario(username, password, id, (ArrayList)null, (ArrayList)null,(ArrayList)null);
             boolean encontrado = false;
-            Iterator var10 = listaUsuarios.iterator();
 
-            while(var10.hasNext()) {
-                Usuario u = (Usuario)var10.next();
+            for (Usuario u : listaUsuarios) {
+
                 if (u.getNombre().equals(usuarioNuevo.getNombre())) {
                     encontrado = true;
                     break;
@@ -83,11 +82,18 @@ public class Socialnetwork {
         ArrayList<Publicacion> listaPublicaciones = new ArrayList();
         ArrayList<Reaccion> listaReacciones = new ArrayList();
 
-        String[] follow1 = new String[]{"Rodrigo"};
-        String[] follow2 = new String[]{"Agus","Pablo"};
-        String[] follow3 = new String[]{"Agus"};
-        String[] follow4 = new String[]{"Tefy"};
-        String[] follow5 = new String[]{"Rodrigo"};
+        ArrayList<String> follow1 = new ArrayList();
+        ArrayList<String> follow2 = new ArrayList();
+        ArrayList<String> follow3 = new ArrayList();
+        ArrayList<String> follow4 = new ArrayList();
+        ArrayList<String> follow5 = new ArrayList();
+
+        follow1.add("Rodrigo");
+        follow2.add("Agus");
+        follow2.add("Pablo");
+        follow3.add("Agus");
+        follow4.add("Tefy");
+        follow5.add("Rodrigo");
 
         Publicacion post1 = new Publicacion(1, (ArrayList)null, "texto", "Holaa", "10/Jul/2021", "Pablo");
         Publicacion post2 = new Publicacion(2, (ArrayList)null, "foto", "Hoy adopte un perrito", "12/Jul/2021", "Tefy");
@@ -100,17 +106,11 @@ public class Socialnetwork {
         Publicacion post9 = new Publicacion(9, (ArrayList)null, "texto", "Este año habran fondas para el 18?", "2/Ago/2021", "Gaspi");
         Publicacion post10 = new Publicacion(10, (ArrayList)null, "texto", "Ya quiero puro salir de vacaciones", "3/Ago/2021", "Agus");
 
-        Usuario user1 = new Usuario("Pablo", "4321", 1, (ArrayList)null, (ArrayList)null, null);
-        Usuario user2 = new Usuario("Tefy", "5287", 2, (ArrayList)null, (ArrayList)null, null);
-        Usuario user3 = new Usuario("Rodrigo", "9999", 3, (ArrayList)null, (ArrayList)null, null);
-        Usuario user4 = new Usuario("Agus", "1234", 4, (ArrayList)null, (ArrayList)null, null);
-        Usuario user5 = new Usuario("Gaspi", "1313", 5, (ArrayList)null, (ArrayList)null, null);
-
-        user1.setSeguidores(follow1);
-        user2.setSeguidores(follow2);
-        user3.setSeguidores(follow3);
-        user4.setSeguidores(follow4);
-        user5.setSeguidores(follow5);
+        Usuario user1 = new Usuario("Pablo", "4321", 1, (ArrayList)null, (ArrayList)null, follow1);
+        Usuario user2 = new Usuario("Tefy", "5287", 2, (ArrayList)null, (ArrayList)null, follow2);
+        Usuario user3 = new Usuario("Rodrigo", "9999", 3, (ArrayList)null, (ArrayList)null, follow3);
+        Usuario user4 = new Usuario("Agus", "1234", 4, (ArrayList)null, (ArrayList)null, follow4);
+        Usuario user5 = new Usuario("Gaspi", "1313", 5, (ArrayList)null, (ArrayList)null, follow5);
 
         ArrayList<Publicacion> listaPublicaciones1 = new ArrayList();
         ArrayList<Publicacion> listaPublicaciones2 = new ArrayList();
@@ -129,7 +129,6 @@ public class Socialnetwork {
         user3.setPublicaciones(listaPublicaciones3);
         user4.setPublicaciones(listaPublicaciones4);
         user5.setPublicaciones(listaPublicaciones5);
-
 
         Collections.addAll(listaUsuarios, new Usuario[]{user1,user2,user3,user4,user5});
         Collections.addAll(listaPublicaciones, new Publicacion[]{post1,post2,post3,post4,post5,post6,post7,post8,post9,post10});
