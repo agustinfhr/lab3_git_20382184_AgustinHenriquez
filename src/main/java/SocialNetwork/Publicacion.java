@@ -9,6 +9,9 @@ public class Publicacion {
     private final String contenido;
     private final String fecha;
     private final String autor;
+    private String fechaShare;
+    private String usuarioShare;
+
 
 
     public Publicacion(int id, ArrayList<Reaccion> reacciones, String tipoPublicacion, String contenido, String fecha, String autor){
@@ -18,6 +21,8 @@ public class Publicacion {
         this.contenido = contenido;
         this.fecha = fecha;
         this.autor = autor;
+        this.fechaShare = null;
+        this.usuarioShare = null;
     }
 
     public int getId() {
@@ -36,14 +41,41 @@ public class Publicacion {
         return this.tipoPublicacion;
     }
 
+    public String getContenido() {
+        return this.contenido;
+    }
+
     public String getAutor() {
         return this.autor;
     }
 
-    public String toString() {
-        return "\t id: " + id + "  contenido: " + contenido + "\n";
+    public String getFechaShare() {
+        return this.fechaShare;
     }
 
+    public void setFechaShare(String fechaShare) {
+        this.fechaShare = fechaShare;
+    }
+
+    public String getUsuarioShare() {
+        return this.usuarioShare;
+    }
+
+    public void setUsuarioShare(String usuarioShare) {
+        this.usuarioShare = usuarioShare;
+    }
+
+    public String toString() {
+        if (usuarioShare == null) {
+            return " Id: " + id + " | Tipo de publicacion: " + tipoPublicacion + " | Creado por: " + autor + " | Publicado el dia: " + fecha +
+                    "\n" + " Contenido: " + contenido + "\n";
+        } else {
+            return " Id: " + id + " | Tipo de publicacion: " + tipoPublicacion + " | Creado por: " + autor + " | Publicado el dia: " + fecha +
+                    "\n" + " Contenido: " + contenido +
+                    "\n" + " Compartido por el Usuario: " + usuarioShare + " | En el dia: " + fechaShare + "\n";
+        }
+
+    }
 
 
 }

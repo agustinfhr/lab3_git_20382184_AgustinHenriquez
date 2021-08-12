@@ -1,12 +1,9 @@
 package SocialNetwork;
 
-import java.lang.reflect.Array;
-import java.security.cert.TrustAnchor;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Iterator;
 
 public class Usuario {
     private final String nombre;
@@ -62,7 +59,7 @@ public class Usuario {
     }
 
     public String toString() {
-        return "\t Nombre: " + nombre + "  Id: " + id + "  Publicaciones: " + publicaciones + "\n";
+        return "\t Nombre: " + nombre + "  Id: " + id + " \n Publicaciones: " + publicaciones + " \n Seguidores: " + seguidores + "\n Publicaciones Compartiedas: " + publicacionesCompartidas + "\n";
     }
 
     public void login(Socialnetwork sn) {
@@ -74,6 +71,7 @@ public class Usuario {
 
         while(true) {
             while (!logear) {
+                boolean encontrado = false;
                 System.out.println("\n\n Si desea salir del programa, ingrese salir");
                 System.out.println(" Ingrese nombre de Usuario : \n");
                 String username = input1.next();
@@ -88,16 +86,22 @@ public class Usuario {
                     String Username = listaUsuarios.get(i).getNombre();
                     String Password = listaUsuarios.get(i).getContrasenia();
                     if (username.equals(Username)) {
+                        encontrado = true;
                         if (password.equals(Password)) {
                             System.out.println("\n\n Ha iniciado Sesion ");
                             listaUsuarioActivo.add(listaUsuarios.get(i));
                             listaUsuarios.remove(i);
                             System.out.println(sn.toString());
                             logear = true;
+                        } else {
+                            System.out.printf("\n **** Contrasenia Incorrecta **** ");
                         }
 
                         break;
                     }
+                }
+                if (!logear && !encontrado) {
+                    System.out.printf("\n **** Usuario no Registrado **** ");
                 }
             }
             return;
@@ -111,8 +115,6 @@ public class Usuario {
         listaUsuarios.add(usuarioActivo.get(0));
         usuarioActivo.remove(0);
     }
-
-
 
 
     public void post(Socialnetwork sn) {
@@ -175,6 +177,14 @@ public class Usuario {
 
                 if (userDest.equals("salir")) {
                     listaPublicaciones.add(postNuevo);
+                    if (listaPublicacionesUser == null) {
+                        ArrayList<Publicacion> nuevasPublicaciones = new ArrayList<>();
+                        nuevasPublicaciones.add(postNuevo);
+                        UsuarioActivo.get(0).setPublicaciones(nuevasPublicaciones);
+                    } else {
+                        listaPublicacionesUser.add(postNuevo);
+                    }
+
                     salir = true;
                     System.out.printf(sn.toString());
                     System.out.printf("\n\n ----- Publicacion creada exitosamente -----");
@@ -224,16 +234,25 @@ public class Usuario {
             for (Usuario u2 : listaUserDisponibles) {
                 if (u2.getNombre().equals(u.getNombre())) {
                     ArrayList<String> seguidoresU2 = u2.getSeguidores();
-                    for (String name : seguidoresU2) {
-                        if (name.equals(usuarioAseguir)) {
-                            System.out.printf("\n\n *** Error, Ya sigues a este Usuario! *** \n");
-                            yaSeguido = true;
-                            salir = true;
+                    if (seguidoresU2 != null) {
+                        for (String name : seguidoresU2) {
+                            if (nombreUsuario.equals(name)) {
+                                System.out.printf("\n\n *** Error, Ya sigues a este Usuario! *** \n");
+                                yaSeguido = true;
+
+                            }
                         }
                     }
                     if (!yaSeguido) {
-                        seguidoresU2.add(nombreUsuario);
-                        u2.setSeguidores(seguidoresU2);
+                        if (seguidoresU2 == null) {
+                            ArrayList<String> nuevosSeguidores = new ArrayList<>();
+                            nuevosSeguidores.add(nombreUsuario);
+                            u2.setSeguidores(nuevosSeguidores);
+                        } else {
+                            seguidoresU2.add(nombreUsuario);
+                            u2.setSeguidores(seguidoresU2);
+                        }
+
                         System.out.printf("\n\n Ahora sigues al Usuario " + usuarioAseguir + "! \n");
                         encontrado = true;
                         salir = true;
@@ -241,17 +260,167 @@ public class Usuario {
                 }
             }
 
-            if (!encontrado) {
+            if (!encontrado && !yaSeguido) {
                 System.out.println("\n **** Error el Usuario a seguir no existe ****  ");
+            }
+
+        }
+
+    }
+
+    public void share(Socialnetwork sn){
+
+        LocalDate today = LocalDate.now();
+        String fecha = today.format(DateTimeFormatter.ofPattern("dd/MMM/yy"));
+
+        Scanner scan = new Scanner(System.in); //id post
+        Scanner dirigidos = new Scanner(System.in);
+
+        ArrayList<Usuario> UsuarioActivo = sn.getUsuarioActivo();
+        ArrayList<Usuario> listaUserDisponibles = sn.getUsuarios();
+        ArrayList<Publicacion> listaPublicaciones = sn.getPublicaciones();
+
+        Publicacion postShare = new Publicacion(0, (ArrayList) null, null, null, null, null);
+
+        String nombreUsuario = UsuarioActivo.get(0).getNombre();
+
+        boolean salir = false;
+        while (!salir) {
+
+            System.out.printf("\n\n Publicaciones disponibles ");
+            for (Publicacion Post : listaPublicaciones) {
+                int idPost = Post.getId();
+                String contenido = Post.getContenido();
+                System.out.printf("\n ID: " + idPost + " Contenido: " + contenido);
+            }
+
+            System.out.println("\n\n Ingrese el ID de la publicacion a compartir: \n");
+            int IDpost = scan.nextInt();
+
+            Publicacion post = new Publicacion(IDpost, (ArrayList) null, null, null, null, null);
+
+            boolean encontrado = false;
+
+            for (Publicacion p : listaPublicaciones) {
+                if (p.getId() == post.getId()) {
+                    postShare = p;
+                    salir = true;
+                    encontrado = true;
+                }
+            }
+            if (!encontrado) {
+                System.out.println("\n\n **** Error, la Publicacion no existe **** \n");
+            }
+        }
+
+        salir = false;
+        while (!salir) {
+
+            System.out.printf("\n\n Usuarios registrados ");
+            for (Usuario listaUsuario : listaUserDisponibles) {
+                String nombreUsuarios = listaUsuario.getNombre();
+                System.out.printf(" Nombre: " + nombreUsuarios);
+            }
+
+            System.out.println("\n\n Ingrese el nombre del Usuario a compartir: \n");
+            System.out.println(" Si no desea compartir la publicacion a mas Usuarios ingrese salir \n");
+            String usuarioShare = dirigidos.nextLine();
+
+            Usuario u = new Usuario(usuarioShare, null, 0, (ArrayList)null, (ArrayList)null, (ArrayList)null);
+
+            if (usuarioShare.equals("salir")) {
+                break;
+            }
+
+            ArrayList<Usuario> nuevaListUsers = new ArrayList<>();
+
+            boolean encontrado = false;
+            ArrayList<Publicacion> listaPost = new ArrayList<>();
+
+            for (Usuario u2 : listaUserDisponibles) {
+                if (u2.getNombre().equals(u.getNombre())) {
+                    nuevaListUsers.add(u2);
+                    ArrayList<Publicacion> listaPostShare = u2.getPublicacionesCompartidas();
+                    if (listaPostShare == null){
+                        postShare.setFechaShare(fecha);
+                        postShare.setUsuarioShare(nombreUsuario);
+                        listaPost.add(postShare);
+                        u2.setPublicacionesCompartidas(listaPost);
+
+                    } else {
+                        postShare.setFechaShare(fecha);
+                        postShare.setUsuarioShare(nombreUsuario);
+                        listaPostShare.add(postShare);
+                    }
+
+                    System.out.printf("\n\n Usuarios a compartir: \n " + nuevaListUsers.toString());
+                    encontrado = true;
+                }
+            }
+
+            if (!encontrado) {
+
+                if (usuarioShare.equals("salir")) {
+
+                    salir = true;
+                    System.out.printf("\n\n ----- Se ha compartido la Publicacion -----");
+
+                } else  {
+
+                    System.out.printf("\n *** Error, Usuario no existente ***");
+
+                    System.out.printf("\n\n Usuarios a compartir: \n " + nuevaListUsers.toString());
+                }
             }
 
 
         }
 
+    }
 
+    public String SocialNetworkToString(Socialnetwork sn) {
 
+        ArrayList<Usuario> UsuarioActivo = sn.getUsuarioActivo();
+        ArrayList<Publicacion> publicaciones = UsuarioActivo.get(0).getPublicaciones();
+        ArrayList<String> seguidores = UsuarioActivo.get(0).getSeguidores();
+        ArrayList<Publicacion> publicacionesCompartidas = UsuarioActivo.get(0).getPublicacionesCompartidas();
+        String nombreUsuario = UsuarioActivo.get(0).getNombre();
+        String sn0 = "\n ####### Visualizando sesion de Usuario: " + nombreUsuario + " #######\n";
+        String sn1;
+        String sn2;
+        String sn3;
+
+        if (publicaciones == null) {
+            sn1 = "\n ---- Tus Publicaciones ---- \n\n" + " No tienes Publicaciones\n";
+        } else {
+            sn1 = "\n ---- Tus Publicaciones ---- \n\n" + publicaciones.toString();
+        }
+
+        if (seguidores == null) {
+            sn2 = "\n ---- Tus Seguidores ---- \n\n" + " No tienes Seguidores\n";
+        } else {
+            sn2 = "\n ---- Tus Seguidores ---- \n\n" + seguidores;
+        }
+
+        if (publicacionesCompartidas == null) {
+            sn3 = "\n ---- Publicaciones que te compartieron ---- \n\n" + " No tienes Publicaciones compartidas\n";
+        } else {
+            sn3 = "\n ---- Publicaciones que te compartieron ---- \n\n" + publicacionesCompartidas.toString();
+
+        }
+        String socialNetwork = sn0 + sn1 + sn2 + sn3;
+        return socialNetwork;
+    }
+
+    public void PrintSocialNetwork(Socialnetwork sn) {
+
+        ArrayList<Usuario> UsuarioActivo = sn.getUsuarioActivo();
+        String SN = UsuarioActivo.get(0).SocialNetworkToString(sn);
+        System.out.printf(SN);
 
     }
+
+  
 
 
 

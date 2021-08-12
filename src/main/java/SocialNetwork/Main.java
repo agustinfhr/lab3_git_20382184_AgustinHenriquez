@@ -58,7 +58,7 @@ public class Main {
 
         while(!salir) {
 
-            System.out.println("\n\t ### RED SOCIAL: JavaGram ## \n\n" + sn.getUsuarioActivo().get(0).toString());
+            System.out.println("\n\t ### RED SOCIAL: JavaGram ## \n\n");
             System.out.println("\n\t## Registrado como: " + usuarioActivo.getNombre() + " ##");
             System.out.println("\n\tEscoja su opcion: ");
             System.out.println("\t1. Realizar publicacion");
@@ -82,9 +82,11 @@ public class Main {
                         break;
                     case 3:
                         System.out.println(" Ha elegido la opcion Compartir publicacion ");
+                        usuarioActivo.share(sn);
                         break;
                     case 4:
                         System.out.println(" Ha elegido la opcion Visualizar red social \n\n");
+                        usuarioActivo.PrintSocialNetwork(sn);
                         break;
                     case 5:
                         System.out.println("\n\n Ha elegido la opcion Cerrar sesion \n\n");
