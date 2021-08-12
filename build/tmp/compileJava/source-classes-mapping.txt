@@ -1,9 +1,9 @@
 SocialNetwork/Reaccion.java
  SocialNetwork.Reaccion
-SocialNetwork/Main.java
- SocialNetwork.Main
 SocialNetwork/Publicacion.java
  SocialNetwork.Publicacion
+SocialNetwork/Main.java
+ SocialNetwork.Main
 SocialNetwork/Socialnetwork.java
  SocialNetwork.Socialnetwork
 SocialNetwork/Usuario.java
